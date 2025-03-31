@@ -1,0 +1,29 @@
+function RotationBox3D({ x, y, z }: { x: number; y: number; z: number }) {
+  const ref = useRef<any>(null);
+
+  useFrame(() => {
+    if (ref.current) {
+      ref.current.rotation.x += 0.01;
+      ref.current.rotation.y += 0.01;
+    }
+  });
+  const txt = useTexture("/pexels-fwstudio-33348-129731.jpg");
+  return (
+    <mesh ref={ref} position={[x, y, z]}>
+      <meshStandardMaterial map={txt} />
+      <boxGeometry scale={50} args={[2, , 2]} />
+    </mesh>
+  );
+}
+
+function SceneBackground() {
+  const { scene } = useThree();
+  const texture = useTexture("/8k_stars.jpg");
+  useEffect(() => {
+    if (texture) {
+      scene.background = texture;
+    }
+  }, [scene, texture]);
+
+  return null;
+}
